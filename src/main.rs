@@ -7,31 +7,19 @@ use std::process::Command;
 #[structopt(name = "nomp", about = "nom nom nom")]
 enum NomArgs {
     #[structopt(name = "weight", alias = "w")]
-    Weight {
-        weight: f32,
-    },
+    Weight { weight: f32 },
 
     #[structopt(name = "search", alias = "s")]
-    Search {
-        food: String,
-    },
+    Search { food: String },
 
     #[structopt(name = "grep", alias = "g")]
-    Grep {
-        food: String,
-    },
+    Grep { food: String },
 
     #[structopt(name = "log", alias = "l")]
-    Log {
-        food: String,
-        number: f32,
-    },
+    Log { food: String, number: f32 },
 
     #[structopt(name = "yesterday", alias = "y")]
-    Yesterday {
-        food: String,
-        number: f32,
-    },
+    Yesterday { food: String, number: f32 },
 
     #[structopt(name = "plot", alias = "p")]
     Plot {},
@@ -49,41 +37,41 @@ enum NomArgs {
 fn main() {
     let args = NomArgs::from_args();
     match args {
-        NomArgs::Weight{weight} => {
+        NomArgs::Weight { weight } => {
             println!("Plotting hard: {}", weight);
-        },
-        NomArgs::Search{food} => {
+        }
+        NomArgs::Search { food } => {
             println!("Plotting hard: {}", food);
-        },
-        NomArgs::Grep{food} => {
+        }
+        NomArgs::Grep { food } => {
             println!("Plotting hard: {}", food);
-        },
-        NomArgs::Log{food, number} => {
+        }
+        NomArgs::Log { food, number } => {
             println!("Plotting hard: {} {}", food, number);
-        },
-        NomArgs::Yesterday{food, number} => {
+        }
+        NomArgs::Yesterday { food, number } => {
             println!("Plotting hard: {} {}", food, number);
-        },
-        NomArgs::Plot{} => {
+        }
+        NomArgs::Plot {} => {
             println!("Plotting hard");
-        },
-        NomArgs::Edit{} => {
+        }
+        NomArgs::Edit {} => {
             Command::new(env::var("EDITOR").unwrap())
                 .arg(env::var("HOME").unwrap() + "/.nom/input")
                 .status()
                 .expect("File not accessible.");
-        },
-        NomArgs::EditWeight{} => {
+        }
+        NomArgs::EditWeight {} => {
             Command::new(env::var("EDITOR").unwrap())
                 .arg(env::var("HOME").unwrap() + "/.nom/weight")
                 .status()
                 .expect("File not accessible.");
-        },
-        NomArgs::Config{} => {
+        }
+        NomArgs::Config {} => {
             Command::new(env::var("EDITOR").unwrap())
                 .arg(env::var("HOME").unwrap() + "/.nom/config")
                 .status()
                 .expect("File not accessible.");
-        },
+        }
     }
 }
