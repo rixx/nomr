@@ -4,33 +4,67 @@ use std::env;
 use std::process::Command;
 
 #[derive(StructOpt, Debug)]
-#[structopt(name = "nomp", about = "nom nom nom")]
+#[structopt(name = "nomr", about = "nom nom nom")]
 enum NomArgs {
-    #[structopt(name = "weight", alias = "w")]
+    #[structopt(
+        name = "weight",
+        visible_alias = "w",
+        about = "Report a weight measurement",
+        display_order = 3
+    )]
     Weight { weight: f32 },
 
-    #[structopt(name = "search", alias = "s")]
+    #[structopt(
+        name = "search",
+        visible_alias = "s",
+        about = "Search for a food item on the web",
+        display_order = 6
+    )]
     Search { food: String },
 
-    #[structopt(name = "grep", alias = "g")]
+    #[structopt(
+        name = "grep",
+        visible_alias = "g",
+        about = "Search in previous entries of your food log",
+        display_order = 5
+    )]
     Grep { food: String },
 
-    #[structopt(name = "log", alias = "l")]
+    #[structopt(
+        name = "log",
+        visible_alias = "l",
+        about = "Display the full food log",
+        display_order = 1
+    )]
     Log { food: String, number: f32 },
 
-    #[structopt(name = "yesterday", alias = "y")]
+    #[structopt(
+        name = "yesterday",
+        visible_alias = "y",
+        about = "Log food for yesterday",
+        display_order = 2
+    )]
     Yesterday { food: String, number: f32 },
 
-    #[structopt(name = "plot", alias = "p")]
+    #[structopt(
+        name = "plot",
+        visible_alias = "p",
+        about = "Show a weight/intake graph",
+        display_order = 4
+    )]
     Plot {},
 
-    #[structopt(name = "edit", alias = "e")]
+    #[structopt(name = "edit", visible_alias = "e", about = "Edit the food log")]
     Edit {},
 
-    #[structopt(name = "editweight", alias = "ew")]
+    #[structopt(
+        name = "editweight",
+        visible_alias = "ew",
+        about = "Edit the weight log"
+    )]
     EditWeight {},
 
-    #[structopt(name = "config", alias = "c")]
+    #[structopt(name = "config", visible_alias = "c", about = "Edit the config")]
     Config {},
 }
 
