@@ -1,3 +1,5 @@
+use chrono::prelude::Local;
+use chrono::DateTime;
 use structopt::StructOpt;
 
 use std::env;
@@ -18,7 +20,7 @@ enum NomArgs {
         about = "Report a weight measurement",
         display_order = 3
     )]
-    Weight { weight: f32 },
+    Weight { weight: f32 }, // TODO
 
     #[structopt(
         name = "search",
@@ -26,7 +28,7 @@ enum NomArgs {
         about = "Search for a food item on the web",
         display_order = 6
     )]
-    Search { food: String },
+    Search { food: String }, // TODO
 
     #[structopt(
         name = "grep",
@@ -34,7 +36,7 @@ enum NomArgs {
         about = "Search in previous entries of your food log",
         display_order = 5
     )]
-    Grep { food: String },
+    Grep { food: String }, // TODO
 
     #[structopt(
         name = "log",
@@ -42,7 +44,7 @@ enum NomArgs {
         about = "Display the full food log",
         display_order = 1
     )]
-    Log { food: String, number: f32 },
+    Log { food: String, number: f32 }, // TODO
 
     #[structopt(
         name = "yesterday",
@@ -50,7 +52,7 @@ enum NomArgs {
         about = "Log food for yesterday",
         display_order = 2
     )]
-    Yesterday { food: String, number: f32 },
+    Yesterday { food: String, number: f32 }, // TODO
 
     #[structopt(
         name = "plot",
@@ -58,7 +60,7 @@ enum NomArgs {
         about = "Show a weight/intake graph",
         display_order = 4
     )]
-    Plot {},
+    Plot {}, // TODO
 
     #[structopt(name = "edit", visible_alias = "e", about = "Edit the food log")]
     Edit {},
@@ -80,7 +82,8 @@ fn main() {
         None => println!("None match"),
         Some(ref cmd) => match cmd {
             NomArgs::Weight { weight } => {
-                println!("Plotting hard: {}", weight);
+                let local: DateTime<Local> = Local::now();
+                println!("Plotting hard: {:.2} {}", weight, local.format("%Y-%m-%d"));
             }
             NomArgs::Search { food } => {
                 println!("Plotting hard: {}", food);
