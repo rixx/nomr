@@ -2,7 +2,10 @@ use chrono::prelude::Local;
 use chrono::DateTime;
 use structopt::StructOpt;
 
+use std::collections::BTreeMap;
 use std::env;
+use std::fs;
+use std::iter::Map;
 use std::process::Command;
 
 #[derive(StructOpt, Debug)]
@@ -76,6 +79,23 @@ enum NomArgs {
     Config {},
 }
 
+struct FoodEntry {
+    name: String,
+    calories: f32,
+}
+
+fn load_weights() -> Option<BTreeMap<String, f32>> {
+    let weight_lines =
+        fs::read_to_string(env::var("HOME").unwrap() + "/.nom/weight").expect("OOPS");
+    let weights: BTreeMap<String, f32> = weight_lines
+        .split('\n')
+        .map(|kv| kv.split(' ').collect::<Vec<&str>>())
+        .filter(|vec| vec.len() == 2)
+        .map(|vec| (vec[0].to_string(), vec[1].to_string().parse().unwrap()))
+        .collect();
+    return Some(weights);
+}
+
 fn main() {
     let args = NomCommand::from_args();
     match args.cmd {
@@ -99,6 +119,10 @@ fn main() {
             }
             NomArgs::Plot {} => {
                 println!("Plotting hard");
+                match load_weights() {
+                    None => println!("Bad!"),
+                    Some(weights) => println!("{:#?}", weights),
+                }
             }
             NomArgs::Edit {} => {
                 Command::new(env::var("EDITOR").unwrap())
